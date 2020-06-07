@@ -21,13 +21,14 @@ $ docker-compose up
 Go to http://127.0.0.1:9000/setup and click upgrade
 
 For services visit:
+
 0) Dependency-Track - localhost
 1) Jenkins server - localhost:8080
 2) SonarQube - localhost:9000 
 3) OWASP ZAP - to be added later
 4) gitsecrets - to be added later
 5) find-sec-bugs - to be added later
-6) Vault - to be added later
+6) HashiCorp Vault - to be added later
 
 # In-depth explanation
 
