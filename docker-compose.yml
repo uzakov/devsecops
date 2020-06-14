@@ -3,6 +3,7 @@ version: '3'
 services:
 
   jenkins:
+    # See https://github.com/jenkinsci/docker for more options
     image: jenkins/jenkins:lts
     volumes:
       - jenkins_data:/var/jenkins_home
@@ -11,6 +12,9 @@ services:
     ports:
       - '8080:8080'
       - '50000:50000'
+    environment:
+      JAVA_OPTS: '-Dhudson.footerURL=https://uzakov.io'
+
 
   sonarqube:
     image: sonarqube:7.7-community
