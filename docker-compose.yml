@@ -2,6 +2,28 @@ version: '3'
 
 services:
 
+  dependency-track:
+    image: 'owasp/dependency-track'
+    deploy:
+      resources:
+        limits:
+          memory: 12288m
+        reservations:
+          memory: 8192m
+      restart_policy:
+        condition: on-failure
+    ports:
+      - '80:8080'
+    volumes:
+      - dependency-track:/data
+
+  vault:
+    image: "vault"
+    environment:
+      VAULT_ADDR: http://127.0.0.1:8300
+    ports:
+      - "8300:8200"
+
   jenkins:
     # See https://github.com/jenkinsci/docker for more options
     image: jenkins/jenkins:lts
@@ -18,11 +40,6 @@ services:
 
   sonarqube:
     image: sonarqube:7.7-community
-    volumes:
-      - sonarqube_conf:/opt/sonarqube/conf
-      - sonarqube_data:/opt/sonarqube/data
-      - sonarqube_extensions:/opt/sonarqube/extensions
-      - sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugins
     networks:
       - devsecops
     ports:
@@ -31,21 +48,6 @@ services:
       - sonar.jdbc.username=sonar
       - sonar.jdbc.password=sonar
       - sonar.jdbc.url=jdbc:postgresql://db:5432/sonar
-
-  dependency-track:
-    image: 'owasp/dependency-track'
-    deploy:
-      resources:
-        limits:
-          memory: 12288m
-        reservations:
-          memory: 8192m
-      restart_policy:
-        condition: on-failure
-    ports:
-      - '80:8080'
-    volumes:
-      - dependency-track:/data
 
   db:
     image: postgres

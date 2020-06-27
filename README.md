@@ -1,7 +1,7 @@
 # DevSecOps pipeline
 
 This project gives a reader a picture of a CI/CD pipeline, that incorporates various security tools (SAST, DAST, 3rd party vulnerability and license management) and methodologies.
-See below for in-depth explanation.
+You can see how whole thing works together and use it as a template. See below for in-depth explanation.
 
 ## Getting Started
 
@@ -19,22 +19,24 @@ To run this project:
 $ cd devsecops
 $ docker-compose up
 ```
-Go to http://127.0.0.1:9000/setup and click upgrade
 
 For services visit:
 
-0) Dependency-Track - localhost
+0) Dependency-Track - localhost:80
 1) Jenkins server - localhost:8080
 2) SonarQube - localhost:9000 
 3) OWASP ZAP - to be added later
-4) gitsecrets - to be added later
+4) HashiCorp Vault - localhost:8300
 5) find-sec-bugs - to be added later
-6) HashiCorp Vault - to be added later
+6) gitsecrets - to be added later
 
 # In-depth explanation
 
 DevSecOps stands for Development, Security and Operations. The idea is that security is embedded into product requirements, design, code and deployment.
-Too often security is embedded at the end of the software development lifecycle, which creates a number of issues, such as having to rewrite code, friction and arguments between product and security teams.
+Too often security is neglected or embedded at the end of the software development lifecycle, which creates a number of issues, such as having to rewrite code, friction and arguments between product and security teams.
+
+Before many organisations would do security at the very end of the developement lifecycle but new term has emerged - shift left. Shift left in terms of application security means embedding(shifting) security as early as possible in the development process. That means adding in security in design, developement, testing and release of software. Activities might be
+
 
 ADD about CICD, Agile, shifting left etc
 
@@ -52,13 +54,14 @@ A good start for a CI/CD pipeline that incorporates security would be to have fo
 
 SAST tools are written to analyse source code and find security flaws. In this example I am using SonarQube. https://www.sonarqube.org/
 
+#### DAST 
 
 #### Secrets management - HashiCorp Vault
 
 Secrets management generally refers to tools and practises related to storing, managing and providing secrets. Example of secrets: credentials, API keys, certificates.
 Too often companies use bad practises: hard code secrets in the code, leave them in configuration files available for everyone, commit secrets to source version control, use cryptographically weak secrets.
 
-Secrets management consists of a number of actions, such as:
+Secrets management consists of a number of actions and benefits, such as:
 1. Creation, deletion, revocation, rotation of secrets
 2. Providing and managing access to secrets
 3. Secure backup and storage
@@ -66,9 +69,7 @@ Secrets management consists of a number of actions, such as:
 5. Elimination of human error
 6. Centralised control
 
-As can be seen earlier, HashiCorp Vault is used in this project. There are other solutions available from different vendors: [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/), [Keywhiz by Square](https://github.com/square/keywhiz), [Confidant by Lyft](https://github.com/lyft/confidant). [Key Vault by Microsoft](https://azure.microsoft.com/en-us/services/key-vault/), [Docker secrets](https://docs.docker.com/engine/swarm/secrets/) and others 
-
-[HashiCorp Vault](https://www.vaultproject.io/) is a popular tool used by many companies
+In this project I am using [HashiCorp Vault](https://www.vaultproject.io/). There are other solutions available from different vendors: [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/), [Keywhiz by Square](https://github.com/square/keywhiz), [Confidant by Lyft](https://github.com/lyft/confidant). [Key Vault by Microsoft](https://azure.microsoft.com/en-us/services/key-vault/), [Docker secrets](https://docs.docker.com/engine/swarm/secrets/) and others.
 
 ### Common questions and answers
 1) Why tool X and not Y? - Everything shown here is for reference, in your environments different tools might suit your needs more. Mentioning or not mentioning any company/product does not mean my or my companies endorsement.
